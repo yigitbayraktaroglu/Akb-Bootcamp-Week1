@@ -46,7 +46,7 @@ namespace Akb_Bootcamp_Week1.Controllers
 
         }
 
-        // POST api/book
+        // POST  api/book
         [HttpPost]
         public IActionResult Post([FromBody] BookAddModel value)
         {
