@@ -48,18 +48,16 @@ namespace Akb_Bootcamp_Week1.Controllers
 
         // POST api/book
         [HttpPost]
-        public IActionResult Post([FromBody] BookModel value)
+        public IActionResult Post([FromBody] BookAddModel value)
         {
-            var book = new BookModel
+            var book = new BookAddModel
             {
                 Name = value.Name,
-                Id = value.Id,
                 Author = value.Author,
                 Description = value.Description,
                 Price = value.Price
             };
-            _bookService.AddBook(book);
-            return Ok(value);
+            return Ok(_bookService.AddBook(book));
         }
 
         // PUT api/book/{id}

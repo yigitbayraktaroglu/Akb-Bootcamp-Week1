@@ -4,18 +4,51 @@ namespace Akb_Bootcamp_Week1.Services
 {
     public class BookService
     {
+        private int nextId = 1;
         private List<BookModel> bookList;
 
         public BookService()
         {
-            // Book listesini oluşturun
-            bookList = new List<BookModel>();
+            // Create Book list
+            bookList = new List<BookModel>() {
+                //Random values for test
+                new BookModel
+            {
+                Name = "Book1",
+                Id = nextId++,
+                Author = "Author1",
+                Description = "Description1",
+                Price = 19.99m
+            },
+            new BookModel
+            {
+                Name = "Book2",
+                Id = nextId++,
+                Author = "Author2",
+                Description = "Description2",
+                Price = 29.99m
+            },
+            new BookModel
+            {
+                Name = "Book3",
+                Id = nextId++,
+                Author = "Author3",
+                Description = "Description3",
+                Price = 39.99m
+            } };
         }
 
-        public void AddBook(BookModel book)
+        public BookModel AddBook(BookAddModel book)
         {
-            // Book eklemek için metot
-            bookList.Add(book);
+            // Method for Add Book
+            BookModel bookModel = new BookModel();
+            bookModel.Id = nextId++;
+            bookModel.Name = book.Name;
+            bookModel.Author = book.Author;
+            bookModel.Price = book.Price;
+            bookModel.Description = book.Description;
+            bookList.Add(bookModel);
+            return bookModel;
         }
 
         public bool UpdateBook(BookModel book, int id)
