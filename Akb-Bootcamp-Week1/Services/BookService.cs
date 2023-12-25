@@ -1,4 +1,5 @@
-﻿using Akb_Bootcamp_Week1.Models;
+﻿using Akb_Bootcamp_Week1.Extensions;
+using Akb_Bootcamp_Week1.Models;
 
 namespace Akb_Bootcamp_Week1.Services
 {
@@ -43,7 +44,7 @@ namespace Akb_Bootcamp_Week1.Services
             // Method for Add Book
             BookModel bookModel = new BookModel();
             bookModel.Id = nextId++;
-            bookModel.Name = book.Name;
+            bookModel.Name = book.Name.ToTitleCase();
             bookModel.Author = book.Author;
             bookModel.Price = book.Price;
             bookModel.Description = book.Description;
@@ -56,7 +57,7 @@ namespace Akb_Bootcamp_Week1.Services
             var tmpBook = GetBookById(id);
             if (tmpBook != null)
             {
-                tmpBook.Name = book.Name;
+                tmpBook.Name = book.Name.ToTitleCase();
                 tmpBook.Description = book.Description;
                 tmpBook.Author = book.Author;
                 tmpBook.Price = book.Price;
@@ -72,7 +73,7 @@ namespace Akb_Bootcamp_Week1.Services
             {
                 if (!string.IsNullOrEmpty(book.Name))
                 {
-                    tmpBook.Name = book.Name;
+                    tmpBook.Name = book.Name.ToTitleCase();
 
                 }
                 if (!string.IsNullOrEmpty(book.Description))

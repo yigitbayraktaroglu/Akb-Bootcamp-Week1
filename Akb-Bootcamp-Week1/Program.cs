@@ -10,6 +10,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<BookService, BookService>();
+// Startup.cs
+builder.Services.AddScoped<FakeAuthenticationService>();
+
 
 var app = builder.Build();
 
@@ -18,7 +21,25 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    //Global exception middleware for dev
+    app.UseDeveloperExceptionPage();
 }
+else
+{
+    // Global exception handling middleware for production
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
+
+// Global log middleware
+app.Use(async (context, next) =>
+{
+    // Log when action is called
+    Console.WriteLine($"Action invoked: {context.Request.Method} - {context.Request.Path} - {context.Request.QueryString.Value} ");
+
+    // Resume next middleware or actions
+    await next();
+});
 
 app.UseHttpsRedirection();
 

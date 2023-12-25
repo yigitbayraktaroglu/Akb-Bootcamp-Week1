@@ -10,6 +10,7 @@ namespace Akb_Bootcamp_Week1.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
+        //Dependency injection
         private readonly BookService _bookService;
 
         public BookController(BookService bookService)
@@ -17,25 +18,24 @@ namespace Akb_Bootcamp_Week1.Controllers
             _bookService = bookService;
         }
 
-        // GET api/book?order={field}
+        // GET api/book
         [HttpGet]
-        public IActionResult Get([FromQuery] string? order)
+        public IActionResult Get()
+        {
+            return Ok(_bookService.GetBooks());
+        }
+
+        // GET api/book/list?order={field}
+        [HttpGet("list")]
+        public IActionResult Get([FromQuery] string order)
         {
             // List of valid order parameters
             var orderReq = new List<string> { "name", "id", "price", "author" };
-
-            // If no order parameter is provided, return the unsorted list of books
-            if (order == null)
-                return Ok(_bookService.GetBooks());
+            // Check if the provided order parameter is valid
+            if (orderReq.Contains(order))
+                return Ok(_bookService.GetBooks(order));
             else
-            {
-                // Check if the provided order parameter is valid
-                if (orderReq.Contains(order))
-                    return Ok(_bookService.GetBooks(order));
-                else
-                    return BadRequest("Order parameter is not found.");
-            }
-
+                return BadRequest("Order parameter is not found.");
         }
 
         // GET api/book/{id}
@@ -101,6 +101,8 @@ namespace Akb_Bootcamp_Week1.Controllers
             if (_bookService.DeleteBook(id)) return Ok();
             else return NotFound();
         }
+
+
 
     }
 }
